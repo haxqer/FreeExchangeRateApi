@@ -4,7 +4,7 @@
 
 ## Project Introduction
 
-This project provides a free hourly updated exchange rate query API. We commit to maintaining this API for free for 10 years, aiming to offer a stable and reliable source of exchange rate data for developers.
+This project provides a free hourly updated exchange rate query API. I commit to maintaining this API for free for 10 years, aiming to offer a stable and reliable source of exchange rate data for developers.
 
 ## Features
 
