@@ -10,8 +10,8 @@ This project provides a free hourly updated exchange rate query API. I commit to
 
 - **Free to Use**: Completely free, with no costs involved.
 - **Real-time Updates**: Exchange rate data is updated every hour.
-- **No Frequency Limit**: The API has no call frequency limit, but please use it reasonably to avoid abuse.
-- **Public Welfare Nature**: This project is a public welfare initiative. We kindly ask everyone to help maintain a good usage environment.
+- **Unrestricted Frequency**: The API imposes no limitations on call frequency; however, we kindly request responsible usage to prevent abuse.
+- **Public Welfare Initiative**: This project is rooted in public service. We urge all users to contribute to maintaining a positive and respectful usage environment.
 
 ## API Usage Instructions
 
