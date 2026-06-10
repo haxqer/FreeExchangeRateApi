@@ -1,37 +1,93 @@
-# Free Hourly Updated Exchange Rate API
+<div align="center">
 
-[README](README.md) | [中文文档](README_zh.md)
+# 免费每小时更新的汇率 API
+
+**一个免费、可靠、每小时更新的汇率 API —— 承诺 10 年免费维护。**
+
+[![官网](https://img.shields.io/badge/官网-exchangerate.fun-2ea44f?style=for-the-badge)](https://www.exchangerate.fun/)
+[![API](https://img.shields.io/badge/API-api.exchangerate.fun-blue?style=for-the-badge)](https://api.exchangerate.fun/latest)
+[![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](#license)
+[![更新频率](https://img.shields.io/badge/更新频率-每小时-orange?style=for-the-badge)]()
+[![免费](https://img.shields.io/badge/免费-永久-red?style=for-the-badge)]()
+
+**[官方网站](https://www.exchangerate.fun/)** · **[在线 API](https://api.exchangerate.fun/latest)** · **[English](README.md)**
+
+</div>
+
+---
 
 ## 项目简介
 
-本项目提供了一个免费的每小时更新的汇率查询 API。我承诺免费维护此 API 10年，旨在为广大开发者提供一个稳定、可靠的汇率数据源。
+本项目为全球开发者提供一个**免费、每小时更新的汇率查询 API**。
 
-## 特点
+我们郑重承诺**免费维护此 API 10 年**，为广大开发者提供一个稳定、可靠的汇率数据源。
 
-- **免费使用**：完全免费，无需任何费用。
-- **实时更新**：每小时更新一次汇率数据。
-- **无频率限制**：接口无调用频率限制，但请合理使用，避免滥用。
-- **公益性质**：本项目为公益项目，请各位大佬高抬贵手，共同维护良好的使用环境。
+> 访问我们的官方网站：**<https://www.exchangerate.fun/>**
 
-## API 使用说明
+## 目录
 
-### Endpoint
+- [项目特点](#项目特点)
+- [快速开始](#快速开始)
+- [API 参考](#api-参考)
+- [代码示例](#代码示例)
+- [维护承诺](#维护承诺)
+- [使用规范](#使用规范)
+- [联系方式](#联系方式)
+- [License](#license)
 
-```
-https://api.exchangerate.fun/latest
-```
+## 项目特点
 
-### 参数
+| 特性 | 说明 |
+| :--- | :--- |
+| **永久免费** | 完全免费，零成本，无需 API Key。 |
+| **每小时更新** | 汇率数据每小时刷新一次。 |
+| **无频率限制** | 接口无强制调用频率限制，请合理使用。 |
+| **170+ 货币** | 覆盖法币、加密货币和贵金属。 |
+| **公益属性** | 作为公益项目服务开发者社区。 |
+| **长期承诺** | 承诺免费运营 10 年。 |
 
-- `base` (可选): 基准货币，默认为 `USD`。
+## 快速开始
 
-### 示例请求
+通过一行请求即可获取最新的美元汇率：
 
 ```bash
-curl "https://api.exchangerate.fun/latest?base=USD"
+curl "https://api.exchangerate.fun/latest"
 ```
 
+或指定其他基准货币：
+
+```bash
+curl "https://api.exchangerate.fun/latest?base=EUR"
+```
+
+就这么简单 —— 无需注册，无需 API Key，无需任何配置。
+
+## API 参考
+
+### 接口地址
+
+```
+GET https://api.exchangerate.fun/latest
+```
+
+### 查询参数
+
+| 参数 | 类型 | 必填 | 默认值 | 说明 |
+| :--- | :--- | :--- | :--- | :--- |
+| `base` | `string` | 否 | `USD` | 基准货币代码 (ISO 4217)。 |
+
+### 响应字段
+
+| 字段 | 类型 | 说明 |
+| :--- | :--- | :--- |
+| `timestamp` | `integer` | 汇率最后更新的 Unix 时间戳。 |
+| `base` | `string` | 当前使用的基准货币代码。 |
+| `rates` | `object` | 货币代码到对应汇率的映射。 |
+
 ### 响应示例
+
+<details>
+<summary><b>点击展开完整 JSON 响应示例</b></summary>
 
 ```json
 {
@@ -211,26 +267,104 @@ curl "https://api.exchangerate.fun/latest?base=USD"
 }
 ```
 
+</details>
+
+## 代码示例
+
+<details>
+<summary><b>JavaScript / Node.js</b></summary>
+
+```javascript
+const response = await fetch('https://api.exchangerate.fun/latest?base=USD');
+const data = await response.json();
+console.log(`1 美元 = ${data.rates.CNY} 人民币`);
+```
+
+</details>
+
+<details>
+<summary><b>Python</b></summary>
+
+```python
+import requests
+
+response = requests.get('https://api.exchangerate.fun/latest', params={'base': 'USD'})
+data = response.json()
+print(f"1 美元 = {data['rates']['CNY']} 人民币")
+```
+
+</details>
+
+<details>
+<summary><b>Go</b></summary>
+
+```go
+package main
+
+import (
+    "encoding/json"
+    "fmt"
+    "net/http"
+)
+
+type Response struct {
+    Timestamp int64              `json:"timestamp"`
+    Base      string             `json:"base"`
+    Rates     map[string]float64 `json:"rates"`
+}
+
+func main() {
+    resp, _ := http.Get("https://api.exchangerate.fun/latest?base=USD")
+    defer resp.Body.Close()
+
+    var data Response
+    json.NewDecoder(resp.Body).Decode(&data)
+    fmt.Printf("1 美元 = %f 人民币\n", data.Rates["CNY"])
+}
+```
+
+</details>
+
+<details>
+<summary><b>PHP</b></summary>
+
+```php
+<?php
+$response = file_get_contents('https://api.exchangerate.fun/latest?base=USD');
+$data = json_decode($response, true);
+echo "1 美元 = {$data['rates']['CNY']} 人民币";
+```
+
+</details>
+
 ## 维护承诺
 
-我郑重承诺，将免费维护此 API 10年。在此期间，我将尽力确保 API 的稳定性和数据的准确性。
+我们郑重承诺**免费维护此 API 10 年**。在此期间，我们将尽力确保 API 的稳定性和数据的准确性。
 
 ## 使用规范
 
-- **合理使用**：请合理使用 API，避免频繁的高并发请求。
-- **公益性质**：本项目为公益性质。
-- **反馈与贡献**：欢迎提出宝贵意见和贡献代码，共同改进项目。
+- **合理使用** —— 请合理使用 API，避免不必要的高并发请求。
+- **公益性质** —— 本项目为公益项目，请各位大佬高抬贵手，共同维护良好的使用环境。
+- **反馈与贡献** —— 欢迎提出宝贵意见、提交 Issue 和 Pull Request，共同改进项目。
 
 ## 联系方式
 
-如有任何问题或建议，请联系我们：
+如有任何问题或建议，欢迎通过以下方式联系我们：
 
-- Email: [haxqer666@gmail.com](mailto:haxqer666@gmail.com)
-- GitHub: [haxqer](https://github.com/haxqer)
+- **官方网站**：<https://www.exchangerate.fun/>
+- **邮箱**：<haxqer666@gmail.com>
+- **GitHub**：[@haxqer](https://github.com/haxqer)
 
 ---
 
-### License
+## License
 
-本项目采用 MIT 许可证。
+本项目采用 **MIT 许可证**。
 
+<div align="center">
+
+**[⬆ 返回顶部](#免费每小时更新的汇率-api)**
+
+用心打造 · 访问 **[exchangerate.fun](https://www.exchangerate.fun/)**
+
+</div>

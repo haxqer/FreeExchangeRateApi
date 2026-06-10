@@ -1,37 +1,93 @@
-# Free Hourly Updated Exchange Rate API
+<div align="center">
 
-[README](README.md) | [中文文档](README_zh.md)
+# Free Hourly Exchange Rate API
 
-## Project Introduction
+**A free, reliable, hourly-updated exchange rate API — committed to 10 years of free service.**
 
-This project provides a free hourly updated exchange rate query API. I commit to maintaining this API for free for 10 years, aiming to offer a stable and reliable source of exchange rate data for developers.
+[![Website](https://img.shields.io/badge/Website-exchangerate.fun-2ea44f?style=for-the-badge)](https://www.exchangerate.fun/)
+[![API](https://img.shields.io/badge/API-api.exchangerate.fun-blue?style=for-the-badge)](https://api.exchangerate.fun/latest)
+[![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](#license)
+[![Updates](https://img.shields.io/badge/Updates-Hourly-orange?style=for-the-badge)]()
+[![Free](https://img.shields.io/badge/Free-Forever-red?style=for-the-badge)]()
+
+**[Website](https://www.exchangerate.fun/)** · **[Live API](https://api.exchangerate.fun/latest)** · **[中文文档](README_zh.md)**
+
+</div>
+
+---
+
+## Overview
+
+This project provides a **free, hourly-updated exchange rate API** for developers worldwide.
+
+We solemnly commit to maintaining this API **free of charge for 10 years**, providing a stable and reliable source of exchange rate data for the developer community.
+
+> Visit our website: **<https://www.exchangerate.fun/>**
+
+## Table of Contents
+
+- [Features](#features)
+- [Quick Start](#quick-start)
+- [API Reference](#api-reference)
+- [Code Examples](#code-examples)
+- [Maintenance Commitment](#maintenance-commitment)
+- [Usage Guidelines](#usage-guidelines)
+- [Contact](#contact)
+- [License](#license)
 
 ## Features
 
-- **Free to Use**: Completely free, with no costs involved.
-- **Real-time Updates**: Exchange rate data is updated every hour.
-- **Unrestricted Frequency**: The API imposes no limitations on call frequency; however, we kindly request responsible usage to prevent abuse.
-- **Public Welfare Initiative**: This project is rooted in public service. We urge all users to contribute to maintaining a positive and respectful usage environment.
+| Feature | Description |
+| :--- | :--- |
+| **Free Forever** | Completely free with zero cost. No API key required. |
+| **Hourly Updates** | Exchange rate data refreshed every hour. |
+| **No Rate Limits** | No enforced request frequency limits — please use responsibly. |
+| **170+ Currencies** | Comprehensive coverage including fiat, crypto, and precious metals. |
+| **Public Welfare** | Built as a public service for the developer community. |
+| **Long-Term Commitment** | Pledged to operate free for 10 years. |
 
-## API Usage Instructions
+## Quick Start
+
+Get the latest USD exchange rates with a single request:
+
+```bash
+curl "https://api.exchangerate.fun/latest"
+```
+
+Or query against a different base currency:
+
+```bash
+curl "https://api.exchangerate.fun/latest?base=EUR"
+```
+
+That's it — no signup, no API key, no fuss.
+
+## API Reference
 
 ### Endpoint
 
 ```
-https://api.exchangerate.fun/latest
+GET https://api.exchangerate.fun/latest
 ```
 
-### Parameters
+### Query Parameters
 
-- `base` (optional): The base currency, default is `USD`.
+| Parameter | Type | Required | Default | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| `base` | `string` | No | `USD` | The base currency code (ISO 4217). |
 
-### Example Request
+### Response Schema
 
-```bash
-curl "https://api.exchangerate.fun/latest?base=USD"
-```
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| `timestamp` | `integer` | Unix timestamp of when the rates were last updated. |
+| `base` | `string` | The base currency code used for the rates. |
+| `rates` | `object` | A map of currency codes to their exchange rate against the base. |
 
-### Response Example
+### Example Response
+
+<details>
+<summary><b>Click to expand sample JSON response</b></summary>
 
 ```json
 {
@@ -211,26 +267,104 @@ curl "https://api.exchangerate.fun/latest?base=USD"
 }
 ```
 
+</details>
+
+## Code Examples
+
+<details>
+<summary><b>JavaScript / Node.js</b></summary>
+
+```javascript
+const response = await fetch('https://api.exchangerate.fun/latest?base=USD');
+const data = await response.json();
+console.log(`1 USD = ${data.rates.EUR} EUR`);
+```
+
+</details>
+
+<details>
+<summary><b>Python</b></summary>
+
+```python
+import requests
+
+response = requests.get('https://api.exchangerate.fun/latest', params={'base': 'USD'})
+data = response.json()
+print(f"1 USD = {data['rates']['EUR']} EUR")
+```
+
+</details>
+
+<details>
+<summary><b>Go</b></summary>
+
+```go
+package main
+
+import (
+    "encoding/json"
+    "fmt"
+    "net/http"
+)
+
+type Response struct {
+    Timestamp int64              `json:"timestamp"`
+    Base      string             `json:"base"`
+    Rates     map[string]float64 `json:"rates"`
+}
+
+func main() {
+    resp, _ := http.Get("https://api.exchangerate.fun/latest?base=USD")
+    defer resp.Body.Close()
+
+    var data Response
+    json.NewDecoder(resp.Body).Decode(&data)
+    fmt.Printf("1 USD = %f EUR\n", data.Rates["EUR"])
+}
+```
+
+</details>
+
+<details>
+<summary><b>PHP</b></summary>
+
+```php
+<?php
+$response = file_get_contents('https://api.exchangerate.fun/latest?base=USD');
+$data = json_decode($response, true);
+echo "1 USD = {$data['rates']['EUR']} EUR";
+```
+
+</details>
 
 ## Maintenance Commitment
 
-I solemnly promise to maintain this API for free for 10 years. During this period, I will strive to ensure the stability of the API and the accuracy of the data.
+We solemnly pledge to maintain this API **free of charge for 10 years**. Throughout this period, we will strive to ensure the API's stability and the accuracy of its data.
 
 ## Usage Guidelines
 
-- **Reasonable Use**: Please use the API reasonably to avoid frequent high-concurrency requests.
-- **Public Welfare Nature**: This project is of a public welfare nature.
-- **Feedback and Contributions**: We welcome valuable suggestions and code contributions to improve the project together.
+- **Reasonable Use** — Please use the API responsibly and avoid unnecessary high-concurrency requests.
+- **Public Welfare Nature** — This is a community service project; please help us keep it healthy and available for everyone.
+- **Feedback & Contributions** — Suggestions, issues, and pull requests are warmly welcomed.
 
-## Contact Information
+## Contact
 
-If you have any questions or suggestions, please contact us:
+If you have any questions or suggestions, please reach out:
 
-- Email: [haxqer666@gmail.com](mailto:haxqer666@gmail.com)
-- GitHub: [haxqer](https://github.com/haxqer)
+- **Website**: <https://www.exchangerate.fun/>
+- **Email**: <haxqer666@gmail.com>
+- **GitHub**: [@haxqer](https://github.com/haxqer)
 
 ---
 
-### License
+## License
 
-This project is licensed under the MIT License.
+This project is licensed under the **MIT License**.
+
+<div align="center">
+
+**[⬆ Back to Top](#free-hourly-exchange-rate-api)**
+
+Made with care · Visit **[exchangerate.fun](https://www.exchangerate.fun/)**
+
+</div>
